@@ -60,7 +60,7 @@ f_names =["Jacques","Valéry","François","Emmanuel","François","Nicolas"]
 
 l_names = last_name_file(l_names, info)
 l_names = remove_dupli(l_names)
-print(l_names)
+
 print(associate_names(f_names, l_names, presidents))
 
 for file in info:
