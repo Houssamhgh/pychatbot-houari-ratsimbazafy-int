@@ -72,3 +72,4 @@ for file in info:
 
     with open("cleaned_" + file, "w") as f2:
         f2.write(cleaned_content)
+        print(cleaned_content, "\n")
