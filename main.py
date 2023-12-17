@@ -89,6 +89,13 @@ def cleaned_text(text):
             print(cleaned_content, "\n")
 
 
+# definition of the text to analyze
+directory = "./speeches-20231123"
+files_names = list_of_files(directory, "txt")
+print(list_of_files("./speeches-20231123", "txt"))
+text = list_of_files("./new_speeches-20231123"), "txt")
+
+
 from collections import Counter
 import string
 
