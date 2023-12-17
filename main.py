@@ -1,76 +1,8 @@
+# HOUARI Houssam - RATSIMBAZAFY Armence - INT4
 
 import os
 import string
 
-def last_name_file(s, docu):
-    last_names = []
-
-    for file in docu:
-
-        name_without_digits = ''.join(char for char in file if not char.isdigit())
-
-        if len(name_without_digits) >= 15:
-            last_name = name_without_digits[11:-4]
-            last_names.append(last_name)
-
-    return last_names
-
-def remove_dupli(docu):
-    nodupli = []
-
-    for i in docu:
-        if i not in nodupli:
-            nodupli.append(i)
-
-    return nodupli
-
-def associate_names(first_names, last_names, result):
-    for i in range(len(first_names)):
-        full_name = first_names[i] + " " + last_names[i]
-        result.append(full_name)
-    return result
-
-def lowercase(text):
-    return ''.join(lowercased_char for lowercased_char in text.lower())
-
-
-def no_punctuation(text):
-    allowed_chars = set(string.ascii_letters + string.digits + 'àâæçéèêëîïôœùûüÿ')
-
-    text_without_punctuation = ''.join(char if char in allowed_chars else ' ' for char in text)
-    return text_without_punctuation
-
-def tfre(x):
-    terms = {}
-    for word in x:
-        i = 0
-        while i < len(terms) and word != terms[i][0]:
-            i += 1
-        if i < len(terms):
-            terms[i][1] += 1
-    return terms
-
-speeches = "speeches-20231123"
-info = os.listdir(speeches)
-
-presidents = []
-l_names =[]
-f_names =["Jacques","Valéry","François","Emmanuel","François","Nicolas"]
-
-
-l_names = last_name_file(l_names, info)
-l_names = remove_dupli(l_names)
-
-print(associate_names(f_names, l_names, presidents))
-
-for file in info:
-    with open("speeches-20231123/" + file, "r", encoding="utf-8") as f1:
-        content = f1.read()
-
-#HOUARI Houssam - RATSIMBAZAFY Armence - INT4
-
-import os
-import string
 
 # gets the names of the presidents out of the files name
 def last_name_file(s, docu):
@@ -86,7 +18,8 @@ def last_name_file(s, docu):
 
     return last_names
 
-#removal of every doublon
+
+# removal of every doublon
 def remove_dupli(docu):
     nodupli = []
 
@@ -97,18 +30,20 @@ def remove_dupli(docu):
     return nodupli
 
 
-#association of every president's first and last's name
+# association of every president's first and last's name
 def associate_names(first_names, last_names, result):
     for i in range(len(first_names)):
         full_name = first_names[i] + " " + last_names[i]
         result.append(full_name)
     return result
 
-#transform every uppercase into lower case character
+
+# transform every uppercase into lower case character
 def lowercase(text):
     return ''.join(lowercased_char for lowercased_char in text.lower())
 
-#removes every ponctuation in the text
+
+# removes every ponctuation in the text
 def no_punctuation(text):
     allowed_chars = set(string.ascii_letters + string.digits + 'àâæçéèêëîïôœùûüÿ')
 
@@ -120,16 +55,16 @@ speeches = "speeches-20231123"
 info = os.listdir(speeches)
 
 presidents = []
-l_names =[]
-f_names =["Jacques","Valéry","François","Emmanuel","François","Nicolas"]
-
+l_names = []
+f_names = ["Jacques", "Valéry", "François", "Emmanuel", "François", "Nicolas"]
 
 l_names = last_name_file(l_names, info)
 l_names = remove_dupli(l_names)
 
 print(associate_names(f_names, l_names, presidents))
 
-#give all the texts without no punctuations and with uppercase
+
+# give all the texts without no punctuations and with uppercase
 def cleaned_text(text):
     for file in info:
         with open("speeches-20231123/" + file, "r", encoding="utf-8") as f1:
@@ -141,34 +76,20 @@ def cleaned_text(text):
             f2.write(cleaned_content)
             print(cleaned_content, "\n")
 
-#counts the term frequency of a word in a text
-def t_fre(text):
-    n_terms = {}
-    for word in text:
-        i = 0
-        while i < len(terms) and word != terms[i][0]:
-            i += 1
-        if i < len(terms):
-            terms[i][1] += 1
-    return terms
 
 from collections import Counter
 import string
 
+
 # other method to get the occurence of a word
 def count_occurrences_word(text):
     occurrences_mots = Counter(text)
-
+    text = {}
     return occurrences_mots
 
-# Exemple d'utilisation :
-texte_exemple = "Ceci est un exemple de texte. Exemple de mot : exemple. Texte exemple, texte exemple."
-resultat = compter_occurrences_mots(texte_exemple)
-
-#display the results of the occurences
-for mot, occurrences in resultat.items():
-    print({mot},{occurrences})
-
+# display the results of the occurences
+for mot, occurrences in text.items():
+    print({mot}, {occurrences})
 
 import math
 from collections import Counter
@@ -181,10 +102,9 @@ def computation_tf(document):
     tf_resultat = {mot: occurrences / len(document.split()) for mot, occurrences in occurrences_mots.items()}
 
     return tf_resultat
-# Exemple d'utilisation :
-collection_documents_exemple = [text]
 
-document_exemple = collection_documents_exemple[0]
+
+# document_exemple = collection_documents_exemple[0]
 
 
 def computation_idf(collection_documents, mot):
@@ -199,41 +119,47 @@ def computation_idf(collection_documents, mot):
 
     return idf
 
-#example
-collection_documents_exemple = [text]
+# example
+# collection_documents_exemple = [text]
 
-document_exemple = collection_documents_exemple[0]
+#document_exemple = collection_documents_exemple[0]
 
 # calculation of every word's tf in the text
-tf_resultats = calculer_tf(document_exemple)
-print("TF pour chaque mot dans le document :")
+tf_resultats = computation_tf(collection_documents)
+print("TF pour chaque mot dans le document :", tf_resultats)
 for mot, tf_score in tf_resultats.items():
     print(f"{mot}: {tf_score:.0f}")
 
 # calculation of each word's idf in the texts
 idf_resultats = {}
-for mot in set(document_exemple.split()):
-    idf_resultats[mot] = calculer_idf(collection_documents_exemple, mot)
+for mot in set(collection_documents.split()):
+    idf_resultats[mot] = computation_idf(collection_documents, mot)
 
 print("\nIDF pour chaque mot dans la collection de documents :")
 for mot, idf_score in idf_resultats.items():
     print(f"{mot}: {idf_score:.0f}")
 
 
-#changing the matrice into a vector
-def matrice_vector(tf_idf):
-    from sklearn.feature_extraction.text import TfidfVectorizer
+# changing the matrice into a vector
+    def liste_en_vecteur(liste):
+        # Utiliser une liste en compréhension pour aplatir la liste de listes
+        vecteur_resultat = [element for sous_liste in liste for element in sous_liste]
 
-    def calculer_tfidf_matrix(textes):
-        # Créer une instance de TfidfVectorizer
-        vectorizer = TfidfVectorizer()
-
-        # Appliquer le vectoriseur aux textes
-        tfidf_matrix = vectorizer.fit_transform(textes)
-
-        return tfidf_matrix, vectorizer.get_feature_names_out()
+        return vecteur_resultat
 
     # Exemple d'utilisation :
+    liste_exemple = [[1, 2, 3],
+                     [4, 5, 6],
+                     [7, 8, 9]]
+
+    vecteur_resultat = liste_en_vecteur(liste_exemple)
+
+    print("Liste d'origine :\n", liste_exemple)
+    print("\nVecteur résultat :", vecteur_resultat)
+
+    def calculer_tfidf_matrix(texts):
+
+        # Exemple d'utilisation :
     textes_exemple = [
         "Ceci est un exemple de texte.",
         "Un autre exemple de texte.",
