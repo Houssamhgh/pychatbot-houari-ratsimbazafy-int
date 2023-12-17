@@ -3,9 +3,21 @@
 import os
 import string
 
+#opening and get access to all the president's speeches
+def list_of_files(directory, extension):
+    files_names = []
+
+    for filename in os.listdir(directory):
+        if filename.endswith(extension):
+            files_names.append(filename)
+        return files_names
+# Call of the function
+directory = "./speeches-20231123"
+files_names = list_of_files(directory, "txt")
+print(list_of_files("./speeches-20231123", "txt"))
 
 # gets the names of the presidents out of the files name
-def last_name_file(s, docu):
+def last_name_file(s,docu):
     last_names = []
 
     for file in docu:
@@ -51,7 +63,7 @@ def no_punctuation(text):
     return text_without_punctuation
 
 
-speeches = "speeches-20231123"
+speeches = "./speeches-20231123"
 info = os.listdir(speeches)
 
 presidents = []
@@ -87,9 +99,9 @@ def count_occurrences_word(text):
     text = {}
     return occurrences_mots
 
-# display the results of the occurences
-for mot, occurrences in text.items():
-    print({mot}, {occurrences})
+    # display the results of the occurences
+    for mot, occurrences in text.items():
+        print({mot}, {occurrences})
 
 import math
 from collections import Counter
@@ -160,11 +172,11 @@ for mot, idf_score in idf_resultats.items():
     def calculer_tfidf_matrix(texts):
 
         # Exemple d'utilisation :
-    textes_exemple = [
-        "Ceci est un exemple de texte.",
-        "Un autre exemple de texte.",
-        "Encore un exemple pour illustrer."
-    ]
+            textes_exemple = [
+            "Ceci est un exemple de texte.",
+            "Un autre exemple de texte.",
+            "Encore un exemple pour illustrer."
+            ]
 
     # Calculer la matrice TF-IDF et les noms de mots
     tfidf_matrix, noms_mots = calculer_tfidf_matrix(textes_exemple)
@@ -176,7 +188,6 @@ for mot, idf_score in idf_resultats.items():
     # Afficher les noms de mots
     print("\nNoms de mots :")
     print(noms_mots)
-
 
 
 #Fonction 6
