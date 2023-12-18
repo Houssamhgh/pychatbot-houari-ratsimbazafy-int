@@ -143,7 +143,7 @@ def IDF(directory_name : str) :
 
 
 def TF_IDF(directory_name : str) :
-    IDF_values = IDF(directory_name) #introduire la valeur d'idf
+    IDF_values = IDF(directory_name)
     final_matrix = []
     list_words = []
     for i in range(len(IDF_values)):
@@ -151,7 +151,7 @@ def TF_IDF(directory_name : str) :
         final_matrix.append(IDF_values[i])
     final = []
     for i in range(len(final_matrix)):
-        final.append([final_matrix[i],0])
+        final.append(final_matrix[i])
     column = 0
 
     for filename in os.listdir(directory_name):
@@ -160,7 +160,8 @@ def TF_IDF(directory_name : str) :
             tf_name = []
 
             for i in range(len(tf_collection)):
-                tf_name.append(tf_collection[i][0])
+                tf_name.append(tf_collection)
+            #print(len(tf_collection))
             for index in range(len(final_matrix)):
 
                 for index in range(len(final_matrix)):
@@ -168,114 +169,14 @@ def TF_IDF(directory_name : str) :
                         for i in range(len(tf_collection)):
                             if list_words[index] == tf_collection[i][0]:
 
-                                final[index][column] = final_matrix[index][1] * tf_collection[i][1]
+                                final_matrix[index][column] *= tf_collection[i][0]
                         else:
-                            final[index][column] = final_matrix[index][1] * 0
+                            final_matrix[index][column] = tf_collection[i][0] * 0
 
-        column += 1
-    return final
-
-print(TF_IDF("cleaned"))
+    column += 1
+    return final_matrix
 
 
-def tokenisation_question(chaine_caractere):
-    new_chaine = cleaned(chaine_caractere)
-    tab = tableau_chaine_caractere(new_chaine)
-    return tab
-
-
-def scalaire(tab1, tab2):
-    resultat = sum(i * j for i, j in zip(tab1, tab2))
-    return resultat
-
-
-def calcul_similarite(tfidf_question, tfidf_document, correspondance_question, correspondance_liste):
-    tfidf_question_aligned = [0] * len(correspondance_liste)
-    for i, mot in enumerate(correspondance_liste):
-        mot_str = str(mot)
-        if mot_str in correspondance_question:
-            index_mot_question = correspondance_question.index(mot_str)
-            tfidf_question_aligned[i] = tfidf_question[index_mot_question]
-
-    dot_product = sum(q * d for q, d in zip(tfidf_question_aligned, tfidf_document))
-    norm_question = sum(q ** 2 for q in tfidf_question_aligned) ** 0.5
-    norm_document = sum(d ** 2 for d in tfidf_document) ** 0.5
-
-    if norm_question == 0 or norm_document == 0:
-        return 0
-
-    cos_sim = dot_product / (norm_question * norm_document)
-    return cos_sim
-
-
-def matrice_tfidf_Vecteur(directory):
-    matrice = []
-    tab_fichiers = list_of_files(directory)
-    nb_fichiers = len(tab_fichiers)
-
-    for i, fichier_nom in enumerate(tab_fichiers):
-        with open(os.path.join(directory, fichier_nom), "r", encoding="utf-8") as fichier:
-            for ligne in fichier:
-                enleve = tableau_chaine_caractere(ligne)
-                mots_comptes = set()
-                for mot in enleve:
-                    mot = mot.strip()
-                    if mot not in mots_comptes:
-                        if mot not in tfidf_dict:
-                            tfidf_dict[mot] = [0.0] * nb_fichiers
-
-                        # Calcule le score TF
-                        tf = TF(os.path.join(directory, fichier_nom), mot)
-
-                        # Calcule le score IDF
-                        somme = sum(presence(os.path.join(directory, tab_fichiers[j]), mot) for j in range(nb_fichiers))
-                        if somme != 0:
-                            score_idf = round(math.log10(nb_fichiers / somme), 3)  # vérifiée
-                        else:
-                            score_idf = 0.0
-
-                        # Calcule le score TF-IDF
-                        tfidf = round(tf * score_idf, 3)
-
-                        tfidf_dict[mot][i] = tfidf
-                        mots_comptes.add(mot)
-
-    for mot in tfidf_dict:
-        matrice.append(tfidf_dict[mot])
-
-    return matrice
-
-
-def scorequestion(question, matrice):
-    MatriceQuestion = []
-
-    directory = "./speeches/Cleaned/"
-
-    question = tokenisation_question(question)
-
-    tab_fichiers = list_of_files(directory)
-
-    # Pour chaque mot dans la matrice (chaque ligne représente un mot)
-
-    for i in range(len(matrice)):
-
-        mot = matrice[i][0]
-
-        if mot in question:
-
-            TF = TFliste(question, mot)
-
-            scores_idf = matrice[i][1:]
-
-            tfidf_scores = [TF * idf for idf in scores_idf]
-
-            MatriceQuestion.append(tfidf_scores)
-
-        else:
-
-            MatriceQuestion.append([0.0] * nb_fichiers)
-
-    return MatriceQuestion
 
 
 
