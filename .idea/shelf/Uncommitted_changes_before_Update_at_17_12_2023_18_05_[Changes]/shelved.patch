@@ -1,0 +1,338 @@
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># HOUARI Houssam - RATSIMBAZAFY Armence - INT4\r\n\r\nimport os\r\nimport string\r\n\r\n\r\n# gets the names of the presidents out of the files name\r\ndef last_name_file(s, docu):\r\n    last_names = []\r\n\r\n    for file in docu:\r\n\r\n        name_without_digits = ''.join(char for char in file if not char.isdigit())\r\n\r\n        if len(name_without_digits) >= 15:\r\n            last_name = name_without_digits[11:-4]\r\n            last_names.append(last_name)\r\n\r\n    return last_names\r\n\r\n\r\n# removal of every doublon\r\ndef remove_dupli(docu):\r\n    nodupli = []\r\n\r\n    for i in docu:\r\n        if i not in nodupli:\r\n            nodupli.append(i)\r\n\r\n    return nodupli\r\n\r\n\r\n# association of every president's first and last's name\r\ndef associate_names(first_names, last_names, result):\r\n    for i in range(len(first_names)):\r\n        full_name = first_names[i] + \" \" + last_names[i]\r\n        result.append(full_name)\r\n    return result\r\n\r\n\r\n# transform every uppercase into lower case character\r\ndef lowercase(text):\r\n    return ''.join(lowercased_char for lowercased_char in text.lower())\r\n\r\n\r\n# removes every ponctuation in the text\r\ndef no_punctuation(text):\r\n    allowed_chars = set(string.ascii_letters + string.digits + 'àâæçéèêëîïôœùûüÿ')\r\n\r\n    text_without_punctuation = ''.join(char if char in allowed_chars else ' ' for char in text)\r\n    return text_without_punctuation\r\n\r\n\r\nspeeches = \"speeches-20231123\"\r\ninfo = os.listdir(speeches)\r\n\r\npresidents = []\r\nl_names = []\r\nf_names = [\"Jacques\", \"Valéry\", \"François\", \"Emmanuel\", \"François\", \"Nicolas\"]\r\n\r\nl_names = last_name_file(l_names, info)\r\nl_names = remove_dupli(l_names)\r\n\r\nprint(associate_names(f_names, l_names, presidents))\r\n\r\n\r\n# give all the texts without no punctuations and with uppercase\r\ndef cleaned_text(text):\r\n    for file in info:\r\n        with open(\"speeches-20231123/\" + file, \"r\", encoding=\"utf-8\") as f1:\r\n            content = f1.read()\r\n\r\n        cleaned_content = no_punctuation(lowercase(content))\r\n\r\n        with open(\"cleaned_\" + file, \"w\") as f2:\r\n            f2.write(cleaned_content)\r\n            print(cleaned_content, \"\\n\")\r\n\r\n\r\nfrom collections import Counter\r\nimport string\r\n\r\n\r\n# other method to get the occurence of a word\r\ndef count_occurrences_word(text):\r\n    occurrences_mots = Counter(text)\r\n    text = {}\r\n    return occurrences_mots\r\n\r\n# display the results of the occurences\r\nfor mot, occurrences in text.items():\r\n    print({mot}, {occurrences})\r\n\r\nimport math\r\nfrom collections import Counter\r\n\r\ndef computation_tf(document):\r\n    # Utiliser Counter pour compter le nombre d'occurrences de chaque mot dans le document\r\n    occurrences_mots = Counter(document.split())\r\n\r\n    # Calculer le TF pour chaque mot\r\n    tf_resultat = {mot: occurrences / len(document.split()) for mot, occurrences in occurrences_mots.items()}\r\n\r\n    return tf_resultat\r\n\r\n\r\n# document_exemple = collection_documents_exemple[0]\r\n\r\n\r\ndef computation_idf(collection_documents, mot):\r\n    # total number of elements in the collection\r\n    nb_documents_total = len(collection_documents)\r\n\r\n    # cber of docs couting the word\r\n    nb_documents_contenant_mot = sum(1 for doc in collection_documents if mot in doc)\r\n\r\n    # compuation of the idf\r\n    idf = math.log(nb_documents_total / (1 + nb_documents_contenant_mot))\r\n\r\n    return idf\r\n\r\n# example\r\n# collection_documents_exemple = [text]\r\n\r\n#document_exemple = collection_documents_exemple[0]\r\n\r\n# calculation of every word's tf in the text\r\ntf_resultats = computation_tf(collection_documents)\r\nprint(\"TF pour chaque mot dans le document :\", tf_resultats)\r\nfor mot, tf_score in tf_resultats.items():\r\n    print(f\"{mot}: {tf_score:.0f}\")\r\n\r\n# calculation of each word's idf in the texts\r\nidf_resultats = {}\r\nfor mot in set(collection_documents.split()):\r\n    idf_resultats[mot] = computation_idf(collection_documents, mot)\r\n\r\nprint(\"\\nIDF pour chaque mot dans la collection de documents :\")\r\nfor mot, idf_score in idf_resultats.items():\r\n    print(f\"{mot}: {idf_score:.0f}\")\r\n\r\n\r\n# changing the matrice into a vector\r\n    def liste_en_vecteur(liste):\r\n        # Utiliser une liste en compréhension pour aplatir la liste de listes\r\n        vecteur_resultat = [element for sous_liste in liste for element in sous_liste]\r\n\r\n        return vecteur_resultat\r\n\r\n    # Exemple d'utilisation :\r\n    liste_exemple = [[1, 2, 3],\r\n                     [4, 5, 6],\r\n                     [7, 8, 9]]\r\n\r\n    vecteur_resultat = liste_en_vecteur(liste_exemple)\r\n\r\n    print(\"Liste d'origine :\\n\", liste_exemple)\r\n    print(\"\\nVecteur résultat :\", vecteur_resultat)\r\n\r\n    def calculer_tfidf_matrix(texts):\r\n\r\n        # Exemple d'utilisation :\r\n    textes_exemple = [\r\n        \"Ceci est un exemple de texte.\",\r\n        \"Un autre exemple de texte.\",\r\n        \"Encore un exemple pour illustrer.\"\r\n    ]\r\n\r\n    # Calculer la matrice TF-IDF et les noms de mots\r\n    tfidf_matrix, noms_mots = calculer_tfidf_matrix(textes_exemple)\r\n\r\n    # Afficher la matrice TF-IDF\r\n    print(\"Matrice TF-IDF :\")\r\n    print(tfidf_matrix.toarray())\r\n\r\n    # Afficher les noms de mots\r\n    print(\"\\nNoms de mots :\")\r\n    print(noms_mots)\r\n\r\n\r\n\r\n#Fonction 6\r\ndef display_least_important_words(tf_idf_matrix):\r\n    least_important_words = set()\r\n\r\n    # Iterate over each word in the TF-IDF matrix\r\n    for document in tf_idf_matrix:\r\n        for word, tf_idf_score in document.items():\r\n            # Check if the TF-IDF score is 0 in all documents\r\n            if tf_idf_score == 0:\r\n                least_important_words.add(word)\r\n\r\n    # Display the list of least important words\r\n    print(\"Least Important Words:\", least_important_words)\r\n\r\nspeeches_directory = \"./cleaned\"\r\ntf_idf_matrix = calculate_tf_idf_matrix(speeches_directory)\r\ndisplay_least_important_words(tf_idf_matrix)\r\n\r\n#Fonction 7\r\ndef display_highest_tfidf_words(tf_idf_matrix):\r\n    highest_tfidf_words = {}\r\n\r\n    for document in tf_idf_matrix:\r\n        # Find the word(s) with the highest TF-IDF score in the document\r\n        max_tfidf_word = max(document, key=document.get)\r\n        max_tfidf_score = document[max_tfidf_word]\r\n\r\n        # Add the word(s) and their score to the result dictionary\r\n        highest_tfidf_words[max_tfidf_word] = max_tfidf_score\r\n\r\n    print(\"Word(s) with Highest TF-IDF Score:\", highest_tfidf_words)\r\n\r\nspeeches_directory = \"./cleaned\"\r\ntf_idf_matrix = calculate_tf_idf_matrix(speeches_directory)\r\ndisplay_highest_tfidf_words(tf_idf_matrix)\r\n\r\n\r\n\r\n#questions fonctions\r\n# question\r\ndef calculate_tf_idf_matrix_with_presidents(directory, president_names):\r\n\r\n    tf_idf_matrix = []\r\n\r\n    for file_name, president in zip(file_names, president_names):\r\n        file_path = os.path.join(directory, file_name)\r\n\r\n        # Read the content of the file\r\n        with open(file_path, 'r') as file:\r\n            content = file.read()\r\n\r\n        word_occurrences = count_word_occurrences(content)\r\n\r\n        tf_idf_scores = {}\r\n        for word, tf in word_occurrences.items():\r\n            tf_idf_scores[word] = tf * idf_scores.get(word, 0)\r\n\r\n        tf_idf_matrix.append({'president': president, 'tf_idf_scores': tf_idf_scores})\r\n\r\n    return tf_idf_matrix\r\n\r\n# Fonction 8.1\r\ndef most_repeated_words_by_president(tf_idf_matrix, president_name):\r\n    president_documents = [doc['tf_idf_scores'] for doc in tf_idf_matrix if doc['president'] == president_name]\r\n\r\n    if not president_documents:\r\n        print(f\"No documents found for President {president_name}\")\r\n        return\r\n\r\n    combined_scores = {}\r\n    for document in president_documents:\r\n        for word, tf_idf_score in document.items():\r\n            combined_scores[word] = combined_scores.get(word, 0) + tf_idf_score\r\n\r\n    most_repeated_word = max(combined_scores, key=combined_scores.get)\r\n    most_repeated_score = combined_scores[most_repeated_word]\r\n\r\n    print(f\"Most Repeated Word(s) by President {president_name}:\")\r\n    print(f\"Word: {most_repeated_word}, TF-IDF Score: {most_repeated_score}\")\r\n\r\n# Example usage:\r\nspeeches_directory = \"./cleaned\"\r\npresident_names = ['Chirac', 'Giscard d\\'Estaing', 'Hollande', 'Mitterrand', 'Macron', 'Sarkozy']\r\ntf_idf_matrix = calculate_tf_idf_matrix_with_presidents(speeches_directory, president_names)\r\nmost_repeated_words_by_president(tf_idf_matrix, 'Chirac')\r\n\r\n# Fonction 9\r\n\r\ndef calculate_tf_idf_matrix_with_target_word(directory, president_names, target_word):\r\n\r\n    tf_idf_matrix = []\r\n\r\n    for file_name, president in zip(file_names, president_names):\r\n        file_path = os.path.join(directory, file_name)\r\n\r\n        with open(file_path, 'r') as file:\r\n            content = file.read()\r\n\r\n        word_occurrences = count_word_occurrences(content)\r\n\r\n        tf_idf_scores = {}\r\n#for word, tf in word_occurrences.items():\r\n\r\n\r\n    cleaned_content = no_punctuation(lowercase(content))\r\n\r\n    with open(\"cleaned_\" + file, \"w\") as f2:\r\n        f2.write(cleaned_content)\r\n        print(cleaned_content, \"\\n\")\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision adc76be4cc100388deda95b9734800446b541a70)
++++ b/main.py	(date 1702831382584)
+@@ -1,9 +1,77 @@
+-# HOUARI Houssam - RATSIMBAZAFY Armence - INT4
++
++import os
++import string
++
++def last_name_file(s, docu):
++    last_names = []
++
++    for file in docu:
++
++        name_without_digits = ''.join(char for char in file if not char.isdigit())
++
++        if len(name_without_digits) >= 15:
++            last_name = name_without_digits[11:-4]
++            last_names.append(last_name)
++
++    return last_names
++
++def remove_dupli(docu):
++    nodupli = []
++
++    for i in docu:
++        if i not in nodupli:
++            nodupli.append(i)
++
++    return nodupli
++
++def associate_names(first_names, last_names, result):
++    for i in range(len(first_names)):
++        full_name = first_names[i] + " " + last_names[i]
++        result.append(full_name)
++    return result
++
++def lowercase(text):
++    return ''.join(lowercased_char for lowercased_char in text.lower())
++
++
++def no_punctuation(text):
++    allowed_chars = set(string.ascii_letters + string.digits + 'àâæçéèêëîïôœùûüÿ')
++
++    text_without_punctuation = ''.join(char if char in allowed_chars else ' ' for char in text)
++    return text_without_punctuation
++
++def tfre(x):
++    terms = {}
++    for word in x:
++        i = 0
++        while i < len(terms) and word != terms[i][0]:
++            i += 1
++        if i < len(terms):
++            terms[i][1] += 1
++    return terms
++
++speeches = "speeches-20231123"
++info = os.listdir(speeches)
++
++presidents = []
++l_names =[]
++f_names =["Jacques","Valéry","François","Emmanuel","François","Nicolas"]
++
++
++l_names = last_name_file(l_names, info)
++l_names = remove_dupli(l_names)
++
++print(associate_names(f_names, l_names, presidents))
++
++for file in info:
++    with open("speeches-20231123/" + file, "r", encoding="utf-8") as f1:
++        content = f1.read()
++
++#HOUARI Houssam - RATSIMBAZAFY Armence - INT4
+ 
+ import os
+ import string
+ 
+-
+ # gets the names of the presidents out of the files name
+ def last_name_file(s, docu):
+     last_names = []
+@@ -18,8 +86,7 @@
+ 
+     return last_names
+ 
+-
+-# removal of every doublon
++#removal of every doublon
+ def remove_dupli(docu):
+     nodupli = []
+ 
+@@ -30,20 +97,18 @@
+     return nodupli
+ 
+ 
+-# association of every president's first and last's name
++#association of every president's first and last's name
+ def associate_names(first_names, last_names, result):
+     for i in range(len(first_names)):
+         full_name = first_names[i] + " " + last_names[i]
+         result.append(full_name)
+     return result
+ 
+-
+-# transform every uppercase into lower case character
++#transform every uppercase into lower case character
+ def lowercase(text):
+     return ''.join(lowercased_char for lowercased_char in text.lower())
+ 
+-
+-# removes every ponctuation in the text
++#removes every ponctuation in the text
+ def no_punctuation(text):
+     allowed_chars = set(string.ascii_letters + string.digits + 'àâæçéèêëîïôœùûüÿ')
+ 
+@@ -55,16 +120,16 @@
+ info = os.listdir(speeches)
+ 
+ presidents = []
+-l_names = []
+-f_names = ["Jacques", "Valéry", "François", "Emmanuel", "François", "Nicolas"]
++l_names =[]
++f_names =["Jacques","Valéry","François","Emmanuel","François","Nicolas"]
+ 
++
+ l_names = last_name_file(l_names, info)
+ l_names = remove_dupli(l_names)
+ 
+ print(associate_names(f_names, l_names, presidents))
+ 
+-
+-# give all the texts without no punctuations and with uppercase
++#give all the texts without no punctuations and with uppercase
+ def cleaned_text(text):
+     for file in info:
+         with open("speeches-20231123/" + file, "r", encoding="utf-8") as f1:
+@@ -76,21 +141,36 @@
+             f2.write(cleaned_content)
+             print(cleaned_content, "\n")
+ 
++#counts the term frequency of a word in a text
++def t_fre(text):
++    n_terms = {}
++    for word in text:
++        i = 0
++        while i < len(terms) and word != terms[i][0]:
++            i += 1
++        if i < len(terms):
++            terms[i][1] += 1
++    return terms
+ 
+ from collections import Counter
+ import string
+ 
+-
+ # other method to get the occurence of a word
+ def count_occurrences_word(text):
+     occurrences_mots = Counter(text)
+-    text = {}
++
+     return occurrences_mots
+ 
+-# display the results of the occurences
+-for mot, occurrences in text.items():
+-    print({mot}, {occurrences})
++# Exemple d'utilisation :
++resultat = ''
++texte_exemple = "Ceci est un exemple de texte. Exemple de mot : exemple. Texte exemple, texte exemple."
++resultat = compter_occurrences_mots(texte_exemple)
++
++#display the results of the occurences
++for mot, occurrences in resultat.items():
++    print({mot},{occurrences})
+ 
++
+ import math
+ from collections import Counter
+ 
+@@ -102,9 +182,10 @@
+     tf_resultat = {mot: occurrences / len(document.split()) for mot, occurrences in occurrences_mots.items()}
+ 
+     return tf_resultat
++# Exemple d'utilisation :
++collection_documents_exemple = [text]
+ 
+-
+-# document_exemple = collection_documents_exemple[0]
++document_exemple = collection_documents_exemple[0]
+ 
+ 
+ def computation_idf(collection_documents, mot):
+@@ -119,47 +200,41 @@
+ 
+     return idf
+ 
+-# example
+-# collection_documents_exemple = [text]
++#example
++collection_documents_exemple = [text]
+ 
+-#document_exemple = collection_documents_exemple[0]
++document_exemple = collection_documents_exemple[0]
+ 
+ # calculation of every word's tf in the text
+-tf_resultats = computation_tf(collection_documents)
+-print("TF pour chaque mot dans le document :", tf_resultats)
++tf_resultats = calculer_tf(document_exemple)
++print("TF pour chaque mot dans le document :")
+ for mot, tf_score in tf_resultats.items():
+     print(f"{mot}: {tf_score:.0f}")
+ 
+ # calculation of each word's idf in the texts
+ idf_resultats = {}
+-for mot in set(collection_documents.split()):
+-    idf_resultats[mot] = computation_idf(collection_documents, mot)
++for mot in set(document_exemple.split()):
++    idf_resultats[mot] = calculer_idf(collection_documents_exemple, mot)
+ 
+ print("\nIDF pour chaque mot dans la collection de documents :")
+ for mot, idf_score in idf_resultats.items():
+     print(f"{mot}: {idf_score:.0f}")
+ 
+ 
+-# changing the matrice into a vector
+-    def liste_en_vecteur(liste):
+-        # Utiliser une liste en compréhension pour aplatir la liste de listes
+-        vecteur_resultat = [element for sous_liste in liste for element in sous_liste]
+-
+-        return vecteur_resultat
++#changing the matrice into a vector
++def matrice_vector(tf_idf):
++    from sklearn.feature_extraction.text import TfidfVectorizer
+ 
+-    # Exemple d'utilisation :
+-    liste_exemple = [[1, 2, 3],
+-                     [4, 5, 6],
+-                     [7, 8, 9]]
++    def calculer_tfidf_matrix(textes):
++        # Créer une instance de TfidfVectorizer
++        vectorizer = TfidfVectorizer()
+ 
+-    vecteur_resultat = liste_en_vecteur(liste_exemple)
++        # Appliquer le vectoriseur aux textes
++        tfidf_matrix = vectorizer.fit_transform(textes)
+ 
+-    print("Liste d'origine :\n", liste_exemple)
+-    print("\nVecteur résultat :", vecteur_resultat)
+-
+-    def calculer_tfidf_matrix(texts):
++        return tfidf_matrix, vectorizer.get_feature_names_out()
+ 
+-        # Exemple d'utilisation :
++    # Exemple d'utilisation :
+     textes_exemple = [
+         "Ceci est un exemple de texte.",
+         "Un autre exemple de texte.",
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"3848abf2-f25d-444b-8e0c-da19c94ff2a6\" name=\"Changes\" comment=\"main prog\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2YZwkjD8Rau05Y0CpUcjMCSyqfr\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/houss/OneDrive/Desktop/bla&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"3848abf2-f25d-444b-8e0c-da19c94ff2a6\" name=\"Changes\" comment=\"\" />\r\n      <created>1700746555274</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1700746555274</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"new read me\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1700747043430</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1700747043430</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"new read me\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1700747106431</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1700747106431</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"speeches\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1700749795604</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1700749795604</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"speeches\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1700749859560</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1700749859560</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"speeches\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1700862273390</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1700862273390</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"speeches\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1700862336949</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1700862336949</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"speeches\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1700862934027</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1700862934027</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"speeches\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1700864056719</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1700864056719</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"main prog\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1702669846932</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1702669846933</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"10\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"new read me\" />\r\n    <MESSAGE value=\"speeches\" />\r\n    <MESSAGE value=\"main prog\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"main prog\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision adc76be4cc100388deda95b9734800446b541a70)
++++ b/.idea/workspace.xml	(date 1702828336208)
+@@ -4,7 +4,10 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="3848abf2-f25d-444b-8e0c-da19c94ff2a6" name="Changes" comment="main prog" />
++    <list default="true" id="3848abf2-f25d-444b-8e0c-da19c94ff2a6" name="Changes" comment="print">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -12,6 +15,7 @@
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++    <option name="UPDATE_TYPE" value="REBASE" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+@@ -113,13 +117,39 @@
+       <option name="project" value="LOCAL" />
+       <updated>1702669846933</updated>
+     </task>
+-    <option name="localTasksCounter" value="10" />
++    <task id="LOCAL-00010" summary="main prog">
++      <option name="closed" value="true" />
++      <created>1702669911238</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1702669911238</updated>
++    </task>
++    <task id="LOCAL-00011" summary="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;main.py">
++      <option name="closed" value="true" />
++      <created>1702670092498</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1702670092498</updated>
++    </task>
++    <task id="LOCAL-00012" summary="print">
++      <option name="closed" value="true" />
++      <created>1702670275916</created>
++      <option name="number" value="00012" />
++      <option name="presentableId" value="LOCAL-00012" />
++      <option name="project" value="LOCAL" />
++      <updated>1702670275916</updated>
++    </task>
++    <option name="localTasksCounter" value="13" />
+     <servers />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="new read me" />
+     <MESSAGE value="speeches" />
+     <MESSAGE value="main prog" />
+-    <option name="LAST_COMMIT_MESSAGE" value="main prog" />
++    <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;main.py" />
++    <MESSAGE value="print" />
++    <option name="LAST_COMMIT_MESSAGE" value="print" />
+   </component>
+ </project>
+\ No newline at end of file
