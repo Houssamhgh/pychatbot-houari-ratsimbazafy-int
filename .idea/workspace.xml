@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3848abf2-f25d-444b-8e0c-da19c94ff2a6" name="Changes" comment="print">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="3848abf2-f25d-444b-8e0c-da19c94ff2a6" name="Changes" comment="tf idf">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Chirac1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Chirac2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Giscard dEstaing.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Hollande.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Macron.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Mitterrand1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Mitterrand2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Sarkozy.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,7 +141,23 @@
       <option name="project" value="LOCAL" />
       <updated>1702670275916</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="tf idf">
+      <option name="closed" value="true" />
+      <created>1702894051990</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1702894051990</updated>
+    </task>
+    <task id="LOCAL-00014" summary="tf idf">
+      <option name="closed" value="true" />
+      <created>1702894260740</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1702894260740</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -159,6 +166,7 @@
     <MESSAGE value="main prog" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;main.py" />
     <MESSAGE value="print" />
-    <option name="LAST_COMMIT_MESSAGE" value="print" />
+    <MESSAGE value="tf idf" />
+    <option name="LAST_COMMIT_MESSAGE" value="tf idf" />
   </component>
 </project>
