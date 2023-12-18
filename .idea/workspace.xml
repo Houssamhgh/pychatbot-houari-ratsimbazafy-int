@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3848abf2-f25d-444b-8e0c-da19c94ff2a6" name="Changes" comment="main prog" />
+    <list default="true" id="3848abf2-f25d-444b-8e0c-da19c94ff2a6" name="Changes" comment="print">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Chirac1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Chirac2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Giscard dEstaing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Hollande.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Macron.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Mitterrand1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Mitterrand2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleaned_Nomination_Sarkozy.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +24,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -113,13 +126,39 @@
       <option name="project" value="LOCAL" />
       <updated>1702669846933</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="main prog">
+      <option name="closed" value="true" />
+      <created>1702669911238</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1702669911238</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;main.py">
+      <option name="closed" value="true" />
+      <created>1702670092498</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1702670092498</updated>
+    </task>
+    <task id="LOCAL-00012" summary="print">
+      <option name="closed" value="true" />
+      <created>1702670275916</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1702670275916</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new read me" />
     <MESSAGE value="speeches" />
     <MESSAGE value="main prog" />
-    <option name="LAST_COMMIT_MESSAGE" value="main prog" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;main.py" />
+    <MESSAGE value="print" />
+    <option name="LAST_COMMIT_MESSAGE" value="print" />
   </component>
 </project>
