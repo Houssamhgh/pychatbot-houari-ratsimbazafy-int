@@ -88,7 +88,7 @@ def TF(text : str):
     IN:
         text (str): line of text
     OUT:
-        dict_occurrence (collection): dictionary with a word as a key and the number of occurrences in a file as a value
+        list[i]: list with a word as a key and the number of occurrences in a file as a value
     """
 
 
@@ -143,40 +143,40 @@ def IDF(directory_name : str) :
 
 
 def TF_IDF(directory_name):
-    # Obtenez les valeurs IDF
+    # Obtaining the values of TF_IDF
     idf_values = IDF(directory_name)
     idf_dict = dict(idf_values)
 
-    # Dictionnaire pour stocker les fréquences totales de chaque mot
+    # Dictionnary to stock the total frequency of each word
     total_tf = {}
 
-    # Parcourir chaque fichier et calculer les fréquences TF
+    # Go through each file and calculate TF frequencies
     for filename in os.listdir(directory_name):
         file_path = os.path.join(directory_name, filename)
         with open(file_path, 'r') as file:
             content = file.read()
             tf_scores = TF(content)
 
-            # Additionner les fréquences TF pour chaque mot
+            # Add the TF frequencies for each word
             for word, count in tf_scores:
                 if word in total_tf:
                     total_tf[word] += count
                 else:
                     total_tf[word] = count
 
-    # Calculer les scores TF-IDF en multipliant le TF cumulé par l'IDF
+    #Calculate TF-IDF scores by multiplying cumulative TF by IDF
     tf_idf_scores = [[word, tf * idf_dict.get(word, 0)] for word, tf in total_tf.items()]
 
     return tf_idf_scores
 
-# HOUARI Houssam - RATSIMBAZAFY Armence - INT4
+# HOUARI Houssam - RATSIMBAZAFY Armence - INT4----------------------PART II---------------------------------------------------
 def tokenization_of_question(qst):
     """Takes a question as a string in parameter and returns a cleaned version of it as a list of words (lowercase and with no punctuation), thus tokenizing the question."""
     qst = str(qst)
-    txt = qst     # I put the question in lowercase manually after taking away the punctuation
-    # We take away the punctuation
+    txt = qst
+
     txt1 = ''
-    punc = (',', "'", ";", ':', '!', '?', '-', '_', '(', ')', '/', '.')
+    punc = (',', "'", ";", ':', '!', '?', '-', '_', '(', ')', '/', '.')#removing ponctuation from the questions
 
     for word in txt:
         for char in word:
@@ -186,7 +186,7 @@ def tokenization_of_question(qst):
                 txt1 += ' '
     txt = txt1
 
-    # We turn letters into lowercase when needed
+    # putting the letters into lower case
     text1 = ''
     for word in txt:
         for letter in word:
@@ -195,38 +195,31 @@ def tokenization_of_question(qst):
             else:
                 text1 += letter
     txt = text1
-    lquestion = txt.split()
+    lquest = txt.split()
 
-    return lquestion
+    return lquest
 
 
 
 
 import os
-import math
+
 
 tfidf_dict = {}  # Initialize the tfidf_dict
 
 
 def tableau_chaine_caractere(ligne):
-    # Diviser la ligne en mots en utilisant l'espace comme séparateur
+    # devide the lines by using spaces between each word
     return ligne.split()
 
 def tableau_chaine_caractere(ligne):
-    # Diviser la ligne en mots en utilisant l'espace comme séparateur
+    # same here
     return ligne.split()
 
-def presence(file_path, word):
-    try:
-        with open(file_path, 'r') as file:
-            content = file.read()
-            return word in content
-    except FileNotFoundError:
-        print("Le fichier n'a pas été trouvé.")
-        return False
+
 
 def TFliste(question, mot):
-    # Calculer la fréquence d'un mot dans la question
+    # Calculate the frequency of a word in the question
     mots = question.split()
     return mots.count(mot) / len(mots)
 
@@ -239,14 +232,14 @@ def scalaire(tab1, tab2):
     resultat = sum(i * j for i, j in zip(tab1, tab2))
     return resultat
 
-def calcul_similarite(tfidf_question, tfidf_document, correspondance_question, correspondance_liste):
-    tfidf_question_aligned = [0] * len(correspondance_liste)
-    for i, mot in enumerate(correspondance_liste):
+def calculate_similarity(tfidf_question, tfidf_document, correspondance_question, correspondance_list):  #Calculating similarity
+    tfidf_question_aligned = [0] * len(correspondance_list)
+    for i, mot in enumerate(correspondance_list):
         mot_str = str(mot)
         if mot_str in correspondance_question:
             index_mot_question = correspondance_question.index(mot_str)
             tfidf_question_aligned[i] = tfidf_question[index_mot_question]
-
+#calculate the similarities by using the cosin
     dot_product = sum(q * d for q, d in zip(tfidf_question_aligned, tfidf_document))
     norm_question = sum(q ** 2 for q in tfidf_question_aligned) ** 0.5
     norm_document = sum(d ** 2 for d in tfidf_document) ** 0.5
@@ -256,51 +249,17 @@ def calcul_similarite(tfidf_question, tfidf_document, correspondance_question, c
 
     cos_sim = dot_product / (norm_question * norm_document)
     return cos_sim
-
-def matrice_tfidf_Vecteur(directory):
+#we have troubles runing this function in our program
+def matrice_tfidf_Vecteur(directory): #fiding the vector of the matrix tf idf
     tfidf_matrix = {}
     for fichier_nom in os.listdir(directory):
-        file_path = os.path.join(directory, fichier_nom)
+        file_path = os.path.join(directory, fichier_nom) #
         with open(file_path, 'r') as file:
             content = file.read()
             tfidf_matrix[fichier_nom] = TF(content)
     return tfidf_matrix
 
-
-
-
-
-def scorequestion(question, matrice):
-    MatriceQuestion = []
-    directory = "./Cleaned/"
-    question = tokenization_of_question(question)
-    tab_fichiers = list_of_files(directory)
-    nb_fichiers = len(tab_fichiers)
-
-    for i in range(len(matrice)):
-        mot = matrice[i][0]
-        if mot in question:
-            TF_score = TFliste(question, mot)
-            scores_idf = matrice[i][1:]
-            tfidf_scores = [TF_score * idf for idf in scores_idf]
-            MatriceQuestion.append(tfidf_scores)
-        else:
-            MatriceQuestion.append([0.0] * nb_fichiers)
-
-    return MatriceQuestion
-
-
-
-def generer_reponse(question, document):
-    mots_question = tokenization_of_question(question)
-    tf_idf_question = TF_IDF(mots_question)
-
-    mot_cle = max(tf_idf_question, key=tf_idf_question.get)
-
-    reponse = trouver_phrase_dans_document(mot_cle, document)
-    return reponse
-
-
+#also this function
 
 def trouver_phrase_dans_document(mots_question, document):
     with open(document, 'r') as file:
@@ -340,6 +299,43 @@ def handle_question(question):
         return reponse
     else:
         return "Aucun document pertinent trouvé."
+
+#Calculating the most relevant document
+def scorequestion(question, matrice):
+    MatriceQuestion = []
+    directory = "./Cleaned/"
+    question = tokenization_of_question(question)
+    tab_fichiers = list_of_files(directory)
+    nb_fichiers = len(tab_fichiers)
+
+    for i in range(len(matrice)):
+        mot = matrice[i][0]
+        if mot in question:
+            TF_score = TFliste(question, mot)
+            scores_idf = matrice[i][1:]
+            tfidf_scores = [TF_score * idf for idf in scores_idf]
+            MatriceQuestion.append(tfidf_scores)
+        else:
+            MatriceQuestion.append([0.0] * nb_fichiers)
+
+    return MatriceQuestion
+
+
+
+def generer_reponse(question, document):   #generate an answer from the previous functions (troubles to make the function work)
+    mots_question = tokenization_of_question(question)
+    tf_idf_question = TF_IDF(mots_question)
+
+    mot_cle = max(tf_idf_question, key=tf_idf_question.get)
+
+    reponse = trouver_phrase_dans_document(mot_cle, document)
+    return reponse
+
+#the answer does not correspond to our needs but its close enough to our question
+
+
+
+
 
 
 
